@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>A Secret Birthday Sketch For You ✏️✨</title>
+  <meta name="description" content="A hand-drawn birthday surprise experience sketched with love.">
+
+  <!-- Hand-drawn & Sketch Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Kalam:wght@400;700&family=Patrick+Hand&family=Permanent+Marker&family=VT323&display=swap"
+    rel="stylesheet">
+
+  <!-- Canvas Confetti -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <!-- SVG Filter for squiggly hand-drawn pencil/ink lines -->
+  <svg style="display: none;">
+    <defs>
+      <filter id="sketch-filter">
+        <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="3" result="noise" />
+        <feDisplacementMap in="SourceGraphic" in2="noise" scale="3" xChannelSelector="R" yChannelSelector="G" />
+      </filter>
+    </defs>
+  </svg>
+
+  <!-- Sketched Background Notebook Grids & Floating Doodles -->
+  <div class="notebook-background"></div>
+  <div class="doodle-layer">
+    <div class="doodle d-star1">✦</div>
+    <div class="doodle d-star2">★</div>
+    <div class="doodle d-heart1">♡</div>
+    <div class="doodle d-heart2">♥</div>
+    <div class="doodle d-sparkle">✧</div>
+    <div class="doodle d-swirl">〰️</div>
+  </div>
+
+  <!-- Sound Toggle Button (Sketched Stamp) -->
+  <button id="sound-toggle" class="sketch-stamp-btn" aria-label="Toggle Sound" title="Sound Effects Active">
+    <span class="stamp-icon" id="sound-icon">🔊</span>
+  </button>
+
+  <main class="sketchbook-canvas">
+
+    <!-- ================================================================= -->
+    <!-- ================================================================= -->
+    <!-- STAGE 1: VIRAL RED POLAROID + VAULT DIAL LOCK SCREEN             -->
+    <!-- ================================================================= -->
+    <section id="lock-screen" class="stage-section active">
+      <div class="glow-vault-stage" id="calculator">
+
+        <!-- Left Side: Taped Polaroid Photo -->
+        <div class="polaroid-wrapper">
+          <div class="washi-tape-photo"></div>
+          <div class="polaroid-card">
+            <div class="polaroid-img-frame">
+              <img src="polaroid.jpg" alt="Special Memory" class="polaroid-photo">
+            </div>
+            <div class="polaroid-caption">
+              <span>certified menace to society 😼✨</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Side: Glowing Red Keypad & Password Dots -->
+        <div class="dial-vault-card">
+          <div class="vault-brand-tag">
+            <span class="lock-icon">🔐</span>
+            <span class="brand-text">TYPE THE MAGIC DATE</span>
+          </div>
+
+          <!-- 8 Glowing Password Dots / Slots -->
+          <div class="glow-dots-row">
+            <span class="glow-dot" id="slot-0"></span>
+            <span class="glow-dot" id="slot-1"></span>
+            <span class="glow-dot-sep"></span>
+            <span class="glow-dot" id="slot-2"></span>
+            <span class="glow-dot" id="slot-3"></span>
+            <span class="glow-dot-sep"></span>
+            <span class="glow-dot" id="slot-4"></span>
+            <span class="glow-dot" id="slot-5"></span>
+            <span class="glow-dot" id="slot-6"></span>
+            <span class="glow-dot" id="slot-7"></span>
+          </div>
+
+          <!-- Glassmorphic Glowing Red Keypad -->
+          <div class="calc-keypad dial-keypad-grid">
+            <button type="button" class="calc-btn btn-num" data-val="1"><span class="btn-digit">1</span></button>
+            <button type="button" class="calc-btn btn-num" data-val="2"><span class="btn-digit">2</span></button>
+            <button type="button" class="calc-btn btn-num" data-val="3"><span class="btn-digit">3</span></button>
+
+            <button type="button" class="calc-btn btn-num" data-val="4"><span class="btn-digit">4</span></button>
+            <button type="button" class="calc-btn btn-num" data-val="5"><span class="btn-digit">5</span></button>
+            <button type="button" class="calc-btn btn-num" data-val="6"><span class="btn-digit">6</span></button>
+
+            <button type="button" class="calc-btn btn-num" data-val="7"><span class="btn-digit">7</span></button>
+            <button type="button" class="calc-btn btn-num" data-val="8"><span class="btn-digit">8</span></button>
+            <button type="button" class="calc-btn btn-num" data-val="9"><span class="btn-digit">9</span></button>
+
+            <button type="button" class="calc-btn btn-action btn-clear" id="btn-clear" title="Clear"><span
+                class="btn-digit">C</span></button>
+            <button type="button" class="calc-btn btn-num" data-val="0"><span class="btn-digit">0</span></button>
+            <button type="button" class="calc-btn btn-action btn-backspace" id="btn-backspace" title="Delete"><span
+                class="btn-digit">⌫</span></button>
+
+            <button type="button" class="calc-btn btn-unlock" id="btn-unlock">
+              <span class="unlock-btn-inner">
+                <span class="unlock-btn-text">Open Secret</span>
+                <span class="unlock-btn-icon">✨ →</span>
+              </span>
+            </button>
+          </div>
+
+          <!-- Error Message Speech Bubble -->
+          <div id="error-speech-bubble" class="sketch-speech-bubble" aria-live="polite">
+            <div class="bubble-arrow"></div>
+            <span class="speech-doodle">🙈</span>
+            <span class="speech-text">Oh come on gurl, you know the date! 😉</span>
+          </div>
+
+          <!-- Sticky Note Hint -->
+          <div class="sticky-hint-wrapper">
+            <button type="button" id="hint-toggle-btn" class="hint-sticky-tab">
+              Need a clue? 💡
+            </button>
+            <div id="hint-note" class="handwritten-hint hidden">
+              <span>✨ Clue: It's the best day in September! 🌸</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ================================================================= -->
+    <!-- STAGE 1.5: QUESTION STAGE ("I have something to tell you...")     -->
+    <!-- ================================================================= -->
+    <section id="question-screen" class="stage-section hidden">
+      <div class="question-page-wrapper">
+        <div class="washi-tape tape-top"></div>
+        <div class="sketch-pin">📌</div>
+
+        <div class="question-doodle-cat">
+          <span class="cat-emoji">🐱💌</span>
+        </div>
+
+        <h2 class="question-heading">
+          I have something to tell you...<br>
+          <span class="marker-highlight">Do you wanna hear it?</span>
+        </h2>
+
+        <p class="question-subtext">Choose wisely! (There is only one correct answer anyway 😜)</p>
+
+        <!-- Playful Buttons Area -->
+        <div class="question-buttons-container" id="question-buttons-box">
+          <button type="button" id="btn-question-yes" class="sketch-choice-btn btn-yes">
+            <span>YES, TELL ME! 💖</span>
+          </button>
+
+          <button type="button" id="btn-question-no" class="sketch-choice-btn btn-no">
+            <span>No 🙈</span>
+          </button>
+        </div>
+
+        <!-- Sneaky popup dialogue when they try to catch No -->
+        <div id="no-dodge-msg" class="dodge-bubble hidden">
+          <span>Nope! You can't say no to this! 🏃💨</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================================= -->
+    <!-- STAGE 2: SURPRISE SPLIT SCREEN (SKETCH STYLE)                    -->
+    <!-- ================================================================= -->
+    <section id="surprise-screen" class="stage-section hidden">
+      <div class="sketch-split-layout">
+
+        <!-- Left Side: Hand-Drawn Birthday Banner -->
+        <div class="sketch-split-left">
+          <div class="washi-tape tape-left"></div>
+
+          <div class="sketch-tag-pill">SPECIAL DELIVERY 💌</div>
+
+          <h1 class="sketch-bday-title">
+            Happy Birthday <br>
+            <span class="marker-highlight">gurl!</span>
+          </h1>
+
+          <div class="hand-drawn-cake-art">
+            <div class="cake-doodle-wrapper">
+              <span class="cake-candle">🕯️</span>
+              <div class="doodle-cake-layers">
+                <span class="cake-tier top">🍰</span>
+              </div>
+            </div>
+
+            <div class="sketch-bday-wishlist">
+              <p class="wish-line highlight">Many more happy returns of the dayy!! 🎂🎉</p>
+              <p class="wish-line">Enjoy your life to the fullest without any regrets...</p>
+              <p class="wish-line">Spend quality time with friends... 💖</p>
+              <p class="wish-line fun">More Sleep; Less work 😂💤</p>
+              <p class="wish-line cheer">Be Happy! Be Joyous! Keep Smiling ✨🌟</p>
+            </div>
+          </div>
+
+          <div class="doodle-stickers-row">
+            <span class="sticker s1">🎈</span>
+            <span class="sticker s2">👑</span>
+            <span class="sticker s3">🎁</span>
+            <span class="sticker s4">💖</span>
+            <span class="sticker s5">⭐</span>
+          </div>
+        </div>
+
+        <!-- Right Side: Hand-Sketched Floating Bubble -->
+        <div class="sketch-split-right">
+
+          <audio id="birthday-song" src="ReelAudio-73819.mp3" loop preload="auto"></audio>
+
+          <div class="sketch-bubble-container" id="bubble-container">
+
+            <!-- Step 1: Initial Pop Me Bubble -->
+            <div class="hand-sketched-bubble" id="magic-bubble" role="button" tabindex="0" title="Tap to pop!">
+              <!-- Sketchy Ring / Wobble Accents -->
+              <div class="bubble-doodle-ring"></div>
+              <div class="bubble-doodle-highlight"></div>
+              <div class="bubble-doodle-highlight-2"></div>
+
+              <div class="bubble-sketch-center">
+                <span class="sketch-bubble-icon">🫧</span>
+                <span class="sketch-bubble-text">Pop me!</span>
+                <span class="sketch-sparkle sk1">✦</span>
+                <span class="sketch-sparkle sk2">✧</span>
+              </div>
+            </div>
+
+            <div class="sketch-bubble-caption" id="bubble-caption">
+              <span>✏️ A little magic is trapped inside...</span>
+            </div>
+
+            <!-- Step 2: Memories Showcase Card (Revealed after Bubble Pops) -->
+            <div id="memories-showcase" class="memories-card-wrapper hidden">
+              <div class="washi-tape-photo"></div>
+
+              <div class="memory-polaroid-card">
+                <div class="memory-img-frame">
+                  <img id="memory-active-img" src="pic 1.jpg" alt="Memory Photo" class="memory-active-photo">
+                </div>
+
+                <div class="memory-card-bottom">
+                  <div class="memory-caption-text" id="memory-caption">
+                    <span>Your wish may come true one day 😂</span>
+                  </div>
+
+                  <div class="memory-controls">
+                    <button type="button" id="btn-prev-memory" class="sketch-prev-mem-btn" aria-label="Previous memory" title="Previous">← Prev</button>
+
+                    <button type="button" id="btn-unlock-memories" class="sketch-unlock-memories-btn">
+                      <span class="unlock-btn-sparkle">✨</span>
+                      <span id="unlock-btn-label">Unlock More Memories</span>
+                      <span class="unlock-btn-arrow">→</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <script src="script.js"></script>
+</body>
+
+</html>
